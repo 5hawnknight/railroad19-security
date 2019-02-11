@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "31dab796-aedb-4b14-8b5e-81055c39781e",
+		"name": "RailRoad19 Security Headers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Project Dashboard (local)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c04e0a0d-fe8f-40da-8dfb-ed1c48e950e3",
+						"exec": [
+							"var rawHeaders = pm.response.headers",
+							"",
+							"var securityHeaders = [",
+							"    {key:\"Content-Security-Policy\",     value:\"default-src 'self';\"},",
+							"    {key:\"Referrer-Policy\",             value:\"same-origin\"},",
+							"    {key:\"X-Content-Type-Options\",      value:\"nosniff\"},",
+							"    {key:\"X-Frame-Options\",             value:\"SAMEORIGIN\"},",
+							"    {key:\"X-XSS-Protection\",            value:\"1; mode=block\"},",
+							"    {key:\"Strict-Transport-Security\",   value:\"max-age=31536000; includeSubDomains\"}];",
+							"",
+							"securityHeaders.forEach(function(securityHeader) {",
+							"    pm.test('security header should be set: ' + securityHeader.key, function() { ",
+							"        pm.expect(rawHeaders.has(securityHeader.key)).to.equal(true)",
+							"    })",
+							"    pm.test('security header ' + securityHeader.key + \" should contain the value => \" + securityHeader.value, function() { ",
+							"        pm.expect(rawHeaders.get(securityHeader.key)).to.to.include(securityHeader.value)",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "HEAD",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
