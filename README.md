@@ -2,4 +2,4 @@
 
 ### Requires Software<br>
 Postman<br>
-`Currently tests against local host`
+`Only configured to run tests against local host`
